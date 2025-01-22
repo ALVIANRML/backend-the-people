@@ -4,6 +4,9 @@ const cors = require("cors");
 const authRoutes = require("./routes/auth");
 const uploadRouter = require('./routes/upload-img');
 const getRouter = require('./routes/get-img')
+const postEvent = require('./routes/upload-events')
+const getEvent = require('./routes/get-event')
+
 
 const app = express();
 
@@ -18,9 +21,12 @@ app.use(bodyParser.urlencoded({ extended: true })); // Untuk mem-parsing data UR
 // POST
 app.use("/api", authRoutes); 
 app.use('/api', uploadRouter); 
+app.use('/api', postEvent); 
+
 
 // GET
 app.use("/api", getRouter); 
+app.use("/api", getEvent); 
 
 
 // Menjalankan server
