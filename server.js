@@ -11,7 +11,7 @@ const app = express();
 
 // CORS Configuration
 const corsOptions = {
-  origin: 'https://my-frontend.vercel.app', // Ganti dengan domain frontend Anda
+  origin: 'https://the-people-q63ngboe8-yannns-projects.vercel.app/', // Ganti dengan domain frontend Anda
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Izinkan metode-metode tertentu
   allowedHeaders: ['Content-Type', 'Authorization'], // Header yang diizinkan
 };
