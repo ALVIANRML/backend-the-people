@@ -6,6 +6,10 @@ console.log("User:", process.env.DB_USER);
 console.log("Password:", process.env.DB_PASSWORD);
 console.log("Server:", process.env.DB_SERVER);
 console.log("Database:", process.env.DB_NAME);
+const PORT = process.env.PORT || 5000; // Gunakan port dari Vercel, atau fallback ke 5000 saat lokal
+
+
+
 
 const config = {
     user: process.env.DB_USER,
