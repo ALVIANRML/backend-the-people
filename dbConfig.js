@@ -1,5 +1,6 @@
 const { Client } = require('pg');
 require('dotenv').config();
+console.log(process.env.DB_USER, process.env.DB_PASSWORD, process.env.DB_SERVER, process.env.DB_NAME);
 
 // Pastikan DB_SERVER berisi alamat server tanpa `DB_SERVER=`
 // Misalnya: DB_SERVER=127.0.0.1
