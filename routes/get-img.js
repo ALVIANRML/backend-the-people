@@ -27,8 +27,7 @@ router.get('/get-all-images', async (req, res) => {
         }
     } catch (error) {
         console.error('Error fetching images:', error);
-        res.status(500).json({ message: error });
-        // res.status(500).json({  });
+        res.status(500).json({ message: 'Server error' });
     }
 });
 
