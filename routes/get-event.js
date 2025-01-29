@@ -14,6 +14,7 @@ router.get('/get-event', async (req, res) => {
     res.status(200).json(result.recordset);
   } catch (error) {
     res.status(500).json({ message: error.message });
+    res.status(500).json({ error });
   }
 });
 
