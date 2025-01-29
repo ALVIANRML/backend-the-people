@@ -5,12 +5,13 @@ console.log(process.env.DB_USER, process.env.DB_PASSWORD, process.env.DB_SERVER,
 // Pastikan DB_SERVER berisi alamat server tanpa `DB_SERVER=`
 // Misalnya: DB_SERVER=127.0.0.1
 const config = {
-    user: process.env.PGUSER,
-    password: process.env.PGPASSWORD,
-    host: process.env.PGHOST,
-    database: process.env.PGDATABASE,
-    port: process.env.PGPORT || 5432,
+    user: process.env.DB_USER,       // Username untuk koneksi
+    password: process.env.DB_PASSWORD,  // Password untuk koneksi
+    host: process.env.DB_SERVER,     // Host, misalnya '127.0.0.1'
+    database: process.env.DB_NAME,   // Nama database yang ingin digunakan
+    port: 5432,                      // Port default PostgreSQL
 };
+
 console.log(config);
 
 const connectToDatabase = async () => {
