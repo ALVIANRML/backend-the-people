@@ -1,8 +1,16 @@
 const express = require('express');
-const sql = require('mssql');
-const { v4: uuidv4 } = require('uuid'); // Import fungsi untuk membuat UUID
+const { v4: uuidv4 } = require('uuid');
 const router = express.Router();
-const connectToDatabase = require('../dbConfig');
+const { Pool } = require('pg'); // Import Pool dari pg untuk koneksi database
+
+// Koneksi pool ke PostgreSQL
+const pool = new Pool({
+  user: 'postgres',           // Ganti dengan username database Anda
+  host: 'localhost',          // Ganti dengan host database Anda
+  database: 'the_people',  // Ganti dengan nama database Anda
+  password: 'password',       // Ganti dengan password database Anda
+  port: 5432,                 // Ganti dengan port PostgreSQL Anda jika berbeda
+});
 
 router.post('/save-event', async (req, res) => {
   const { eventName, eventDate, eventType, eventLink } = req.body;
@@ -18,39 +26,33 @@ router.post('/save-event', async (req, res) => {
   if (missingFields.length > 0) {
     return res.status(400).json({
       error: 'Some fields are missing',
-      missingFields: missingFields, // Mengembalikan nama field yang kosong
+      missingFields: missingFields,
     });
   }
 
   try {
-    // Koneksi ke database
-    const pool = await connectToDatabase();
-
     // Membuat UUID untuk id
     const id = uuidv4();
 
     // Query untuk menyimpan data
     const query = `
       INSERT INTO Event (id, eventName, eventDate, eventType, eventLink)
-      VALUES (@id, @eventName, @eventDate, @eventType, @eventLink)
+      VALUES ($1, $2, $3, $4, $5)
     `;
 
-    // Eksekusi query dengan parameter
-    await pool.request()
-      .input('id', sql.VarChar, id) // UUID disimpan di kolom `id`
-      .input('eventName', sql.VarChar, eventName)
-      .input('eventDate', sql.Date, eventDate)
-      .input('eventType', sql.VarChar, eventType)
-      .input('eventLink', sql.VarChar, eventLink)
-      .query(query);
+    // Eksekusi query dengan parameter menggunakan pool.query
+    await pool.query(query, [id, eventName, eventDate, eventType, eventLink]);
 
-    res.status(201).json({
+    // Mengirimkan respons sukses
+    return res.status(201).json({
       message: 'Event saved successfully',
       data: { id, eventName, eventDate, eventType, eventLink },
     });
+
   } catch (error) {
-    console.error('Error saving event:', error.message);
-    res.status(500).json({ error: 'Failed to save event' });
+    // Menangani error jika query atau koneksi gagal
+    console.error('Error saving event:', error.stack);
+    return res.status(500).json({ error: 'Failed to save event' });
   }
 });
 
