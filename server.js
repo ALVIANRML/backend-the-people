@@ -9,7 +9,7 @@ const getEvent = require('./routes/get-event');
 
 const app = express();
 const corsOptions = {
-  origin: '*', // Izinkan semua domain (sementara, bisa diganti dengan URL frontend)
+  origin: 'https://the-people-tau.vercel.app/', // Izinkan semua domain (sementara, bisa diganti dengan URL frontend)
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
