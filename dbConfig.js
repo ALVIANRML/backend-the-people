@@ -6,7 +6,7 @@ require('dotenv').config();
 const config = {
     user: process.env.DB_USER,       // Username untuk koneksi
     password: process.env.DB_PASSWORD,  // Password untuk koneksi
-    host: "127.0.0.1",     // Host, misalnya '127.0.0.1'
+    host: process.env.DB_SERVER,     // Host, misalnya '127.0.0.1'
     database: process.env.DB_NAME,   // Nama database yang ingin digunakan
     port: 5432,                      // Port default PostgreSQL
 };
