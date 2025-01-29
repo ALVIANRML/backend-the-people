@@ -8,6 +8,7 @@ const config = {
     database: process.env.DB_NAME,
     port: 5432, // Port PostgreSQL default
 };
+console.log(config)
 
 const connectToDatabase = async () => {
     const client = new Client(config);
