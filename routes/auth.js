@@ -22,6 +22,7 @@ router.post("/login", async (req, res) => {
             "SELECT * FROM users WHERE username = $1 AND password = $2", // Penggunaan query untuk PostgreSQL
             [username, password] // Parameter query
         );
+        res.json({ result });
         
         // Mengecek hasil query
         if (result.rows.length > 0) {
