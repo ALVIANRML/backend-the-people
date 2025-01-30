@@ -9,7 +9,7 @@ const config = {
     password: process.env.PGPASSWORD,  // Password untuk koneksi
     host: process.env.PGHOST,     // Host, misalnya '127.0.0.1'
     database: process.env.PGNAME,   // Nama database yang ingin digunakan
-    port: 5432,                      // Port default PostgreSQL
+    port: 19585,                      // Port default PostgreSQL
 };
 
 console.log(config);
