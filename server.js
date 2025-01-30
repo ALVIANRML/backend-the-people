@@ -9,7 +9,7 @@ const uploadRouter = require("./routes/upload-img");
 const getRouter = require("./routes/get-img");
 const postEvent = require("./routes/upload-events");
 const getEvent = require("./routes/get-event");
-
+app.use(cors());
 const app = express();
 
 const corsOptions = {

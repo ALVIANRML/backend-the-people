@@ -2,7 +2,10 @@ const express = require("express");
 const router = express.Router();
 const connectToDatabase = require("../dbConfig");
 const jwt = require("jsonwebtoken");
-app.use(cors()); 
+const cors = require("cors");
+
+// Middleware CORS
+router.use(cors());
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
