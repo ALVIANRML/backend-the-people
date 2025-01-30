@@ -9,8 +9,8 @@ const uploadRouter = require("./routes/upload-img");
 const getRouter = require("./routes/get-img");
 const postEvent = require("./routes/upload-events");
 const getEvent = require("./routes/get-event");
-app.use(cors());
-const app = express();
+
+const app = express(); // Inisialisasi `app` harus dilakukan sebelum digunakan
 
 const corsOptions = {
   origin: 'https://the-people-tau.vercel.app/',
@@ -18,7 +18,7 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); // Gunakan `app` setelah deklarasi
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use(bodyParser.json());
