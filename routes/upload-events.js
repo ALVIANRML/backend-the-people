@@ -1,18 +1,21 @@
 const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const router = express.Router();
-const pool = require('../dbConfig'); // Mengimpor pool dari dbConfig
+const { Pool } = require('pg'); // Import Pool dari pg untuk koneksi database
+const connectToDatabase = require("../dbConfig");
+
 
 router.post('/save-event', async (req, res) => {
   const { eventName, eventDate, eventType, eventLink } = req.body;
 
-  // Validasi input
+  // Array untuk menyimpan field yang kosong
   const missingFields = [];
   if (!eventName) missingFields.push('eventName');
   if (!eventDate) missingFields.push('eventDate');
   if (!eventType) missingFields.push('eventType');
   if (!eventLink) missingFields.push('eventLink');
 
+  // Jika ada field yang kosong, kembalikan respons dengan informasi spesifik
   if (missingFields.length > 0) {
     return res.status(400).json({
       error: 'Some fields are missing',
@@ -23,7 +26,7 @@ router.post('/save-event', async (req, res) => {
   try {
     // Membuat UUID untuk id
     const id = uuidv4();
-
+    const client = await connectToDatabase();
     // Query untuk menyimpan data
     const query = `
       INSERT INTO Event (id, eventName, eventDate, eventType, eventLink)
@@ -31,7 +34,7 @@ router.post('/save-event', async (req, res) => {
     `;
 
     // Eksekusi query dengan parameter menggunakan pool.query
-    await pool.query(query, [id, eventName, eventDate, eventType, eventLink]);
+    await client.query(query, [id, eventName, eventDate, eventType, eventLink]);
 
     // Mengirimkan respons sukses
     return res.status(201).json({
@@ -41,10 +44,9 @@ router.post('/save-event', async (req, res) => {
 
   } catch (error) {
     // Menangani error jika query atau koneksi gagal
-    console.error('Error saving event:', error.message);
+    console.error('Error saving event:', error.stack);
     return res.status(500).json({ error: 'Failed to save event' });
   }
 });
 
-// Export router
 module.exports = router;
