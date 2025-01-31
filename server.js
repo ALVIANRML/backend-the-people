@@ -13,7 +13,7 @@ const getEvent = require("./routes/get-event");
 const app = express(); // Inisialisasi `app` harus dilakukan sebelum digunakan
 
 const corsOptions = {
-  origin: 'https://the-people-tau.vercel.app/',
+  origin: 'https://the-people-tau.vercel.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
