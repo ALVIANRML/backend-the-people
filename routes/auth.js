@@ -6,6 +6,7 @@ const cors = require("cors");
 
 // Middleware CORS
 router.use(cors());
+
 router.post("/login", async (req, res) => {
     const { username, password } = req.body;
 
@@ -19,24 +20,23 @@ router.post("/login", async (req, res) => {
         
         // Menjalankan query untuk mencocokkan username dan password
         const result = await client.query(
-            "SELECT * FROM users WHERE username = $1 AND password = $2", // Penggunaan query untuk PostgreSQL
-            [username, password] // Parameter query
+            "SELECT * FROM users WHERE username = $1 AND password = $2",
+            [username, password]
         );
-        res.json({ result });
-        
+
         // Mengecek hasil query
         if (result.rows.length > 0) {
             // Membuat JWT token jika login berhasil
             const token = jwt.sign(
                 { username: username },
-                process.env.JWT_SECRET_KEY, // Ubah ke secret key yang aman
-                { expiresIn: "1h" } // Token berlaku selama 1 jam
+                process.env.JWT_SECRET_KEY,
+                { expiresIn: "1h" }
             );
             
             res.status(200).json({
                 message: "Login successful",
                 redirectTo: "/dashboard",
-                token: token // Kirimkan token sebagai bagian dari response
+                token: token
             });
         } else {
             res.status(401).json({ message: "Invalid username or password" });
@@ -46,7 +46,6 @@ router.post("/login", async (req, res) => {
         await client.end();
     } catch (error) {
         console.error("Login error:", error);
-        // Log error secara rinci
         res.status(500).json({ message: "Server error", error: error.message });
     }
 });
