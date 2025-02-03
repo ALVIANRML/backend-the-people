@@ -25,7 +25,7 @@ router.get('/get-event', async (req, res) => {
     if (result.rows.length > 0) {
       return res.status(200).json(result.rows);
     } else {
-      return res.status(404).json({ message: "No events found for the specified month" });
+     
     }
   } catch (error) {
     console.error("Error fetching events:", error.message);
