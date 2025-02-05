@@ -15,7 +15,8 @@ const app = express(); // Inisialisasi `app` harus dilakukan sebelum digunakan
 const corsOptions = {
   origin: 
   ['https://the-people-tau.vercel.app',
-    'https://the-people-yannns-projects.vercel.app'
+    'https://the-people-yannns-projects.vercel.app',
+    'https://www.thepeople.web.id'
 
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
