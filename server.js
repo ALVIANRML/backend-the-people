@@ -16,7 +16,8 @@ const corsOptions = {
   origin: 
   ['https://the-people-tau.vercel.app',
     'https://the-people-yannns-projects.vercel.app',
-    'https://www.thepeople.web.id'
+    'https://www.thepeople.web.id',
+    'http://localhost:3000'
 
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
