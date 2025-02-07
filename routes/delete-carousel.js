@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const { Pool } = require('pg');
-const connectToDatabase = require('../dbConfig');
+const connectToDatabase = require("../dbConfig");
 
 
 
-router.post('/delete-carousel/:id', async (req, res) => {
+router.delete("/:id", async (req, res) => {
     const {id} = req.params;
 
     try{
@@ -17,3 +17,4 @@ router.post('/delete-carousel/:id', async (req, res) => {
         res.status(500).json({ success: false, message: "Failed to delete image" });
     }
 })
+module.exports = router;
