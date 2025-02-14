@@ -10,7 +10,8 @@ router.delete("/delete-carousel/:id", async (req, res) => {
     const { id } = req.params;
 
     try {
-        const result = await pool.query("DELETE FROM carousel WHERE id = $1 RETURNING *", [id]);
+        const Client = await pool();
+        const result = await Client.query("DELETE FROM carousel WHERE id = $1 RETURNING *", [id]);
 
         if (result.rowCount === 0) {
             return res.status(404).json({ success: false, message: "Image not found" });
