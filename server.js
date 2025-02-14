@@ -25,6 +25,8 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
+// cek backend postman url
+
 app.use(cors(corsOptions)); // Gunakan `app` setelah deklarasi
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
@@ -40,6 +42,12 @@ app.get("/api/db-status", async (req, res) => {
         console.error(err);
         res.status(500).json({ error: "Database connection failed" });
     }
+});
+console.log("Registered Routes:");
+app._router.stack.forEach((r) => {
+  if (r.route && r.route.path) {
+    console.log(`${Object.keys(r.route.methods).join(",").toUpperCase()} ${r.route.path}`);
+  }
 });
 
 // Routes

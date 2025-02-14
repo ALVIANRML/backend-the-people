@@ -1,20 +1,26 @@
 const express = require("express");
 const router = express.Router();
-const { Pool } = require('pg');
-const connectToDatabase = require("../dbConfig");
+const pool = require("../dbConfig"); // Import database pool
+const cors = require("cors");
+// 
+// Middleware CORS
+router.use(cors());
 
+router.delete("/delete-carousel/:id", async (req, res) => {
+    const { id } = req.params;
 
+    try {
+        const result = await pool.query("DELETE FROM carousel WHERE id = $1 RETURNING *", [id]);
 
-router.delete("/:id", async (req, res) => {
-    const {id} = req.params;
+        if (result.rowCount === 0) {
+            return res.status(404).json({ success: false, message: "Image not found" });
+        }
 
-    try{
-        await db.query("DELETE FROM carousel WHERE id = ?", [id]);
-
-        res.json({ success: true, message: "Image deleted Successfully!"});
-    } catch(error){
-        console.error("error deleting image:", error);
+        res.json({ success: true, message: "Image deleted successfully!" });
+    } catch (error) {
+        console.error("Error deleting image:", error);
         res.status(500).json({ success: false, message: "Failed to delete image" });
     }
-})
-module.exports = router;
+});
+
+module.exports = router; 
