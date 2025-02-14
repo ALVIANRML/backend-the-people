@@ -38,7 +38,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Test koneksi ke database
 app.get("/api/db-status", async (req, res) => {
     try {
-        const result = await Client.query("SELECT NOW() as current_time");
+        const result = await pool.query("SELECT NOW() as current_time");
         res.json({ message: "Database connected", time: result.rows[0].current_time });
     } catch (err) {
         console.error(err);
