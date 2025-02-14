@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -11,7 +10,6 @@ const getRouter = require("./routes/get-img");
 const postEvent = require("./routes/upload-events");
 const getEvent = require("./routes/get-event");
 const deleteCarousel  = require("./routes/delete-carousel");
-const { Client } = require("undici-types");
 
 const app = express(); // Inisialisasi `app` harus dilakukan sebelum digunakan
 
