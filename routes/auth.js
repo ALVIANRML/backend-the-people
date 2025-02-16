@@ -24,20 +24,6 @@ router.post("/login", async (req, res) => {
             [username, password]
         );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         
         // Mengecek hasil query
         if (result.rows.length > 0) {

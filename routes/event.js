@@ -1,9 +1,37 @@
-const express = require('express');
-const { v4: uuidv4 } = require('uuid');
+const express = require("express");
 const router = express.Router();
-const { Pool } = require('pg'); // Import Pool dari pg untuk koneksi database
 const connectToDatabase = require("../dbConfig");
 
+// Ambil data event bulan tertentu
+router.get('/get-event', async (req, res) => {
+  const { month } = req.query;
+
+  // Validasi input
+  if (!month || isNaN(month) || month < 1 || month > 12) {
+    return res.status(400).json({
+      message: "Month parameter is required and must be a number between 1 and 12",
+    });
+  }
+
+  try {
+    const client = await connectToDatabase();
+    // Query untuk mendapatkan event berdasarkan bulan
+    const result = await client.query(
+      'SELECT * FROM event WHERE EXTRACT(MONTH FROM eventDate) = $1',
+      [month]
+    );
+
+    // Mengembalikan data event yang ditemukan
+    if (result.rows.length > 0) {
+      return res.status(200).json(result.rows);
+    } else {
+     
+    }
+  } catch (error) {
+    console.error("Error fetching events:", error.message);
+    return res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
 
 router.post('/save-event', async (req, res) => {
   const { eventName, eventDate, eventType, eventLink } = req.body;
@@ -48,5 +76,4 @@ router.post('/save-event', async (req, res) => {
     return res.status(500).json({ error: 'Failed to save event' });
   }
 });
-
 module.exports = router;

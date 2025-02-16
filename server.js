@@ -5,11 +5,8 @@ const cors = require("cors");
 const pool = require("./dbConfig"); // Import koneksi database
 
 const authRoutes = require("./routes/auth");
-const uploadRouter = require("./routes/upload-img");
-const getRouter = require("./routes/get-img");
-const postEvent = require("./routes/upload-events");
-const getEvent = require("./routes/get-event");
-const deleteCarousel  = require("./routes/delete-carousel");
+const Event = require("./routes/event");
+const Carousel  = require("./routes/carousel");
 
 const app = express(); // Inisialisasi `app` harus dilakukan sebelum digunakan
 
@@ -52,11 +49,8 @@ app._router.stack.forEach((r) => {
 
 // Routes
 app.use("/api", authRoutes);
-app.use("/api", uploadRouter);
-app.use("/api", postEvent);
-app.use("/api", getRouter);
-app.use("/api", getEvent);
-app.use("/api", deleteCarousel);
+app.use("/api", Event);
+app.use("/api", Carousel);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
