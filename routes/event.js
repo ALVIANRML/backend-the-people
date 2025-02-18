@@ -90,7 +90,7 @@ router.delete('/delete-event/:id', async (req,res) =>{
   const result = await client.query('DELETE FROM event WHERE id = $1 RETURNING * ', [id]);
 
   if (result.rowCount == 0){
-    return req.status(404).json ({
+    return res.status(404).json ({
       success:false, message:"Event Not Found"
     });
   } else{
@@ -100,4 +100,23 @@ router.delete('/delete-event/:id', async (req,res) =>{
     console.error("this is the error" , error)
   }
 })
+
+// update event
+router.post("/update-event/:id", async (req, res) => {
+  const {id} = req.params;
+  const { eventName, eventDate, eventType, eventLink } = req.body;
+  const client = await connectToDatabase();
+  try{
+    const result = await client.query('UPDATE event SET eventName = $2 , eventDate = $3,  eventType= $4,  eventLink= $5  WHERE id = $1 RETURNING *;',
+      [id, eventName, eventDate, eventType, eventLink]
+    );
+    
+    res.json({success : true, message: "Update Successfully"})
+    
+  } catch(error){
+    console.error("Error saat update event:", error);
+    return res.status(500).json({ success: false, message: "Internal Server Error", error: error.message });
+  }
+})
+
 module.exports = router;
